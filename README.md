@@ -8,6 +8,12 @@ It utilizes the Buzz in Social Media data set, available at the UCI Machine Lear
 
 WIP
 
+# Acknowledgements
+
+Special thanks to François Kawala, Ahlame Douzal, Eric Gaussier, and Eustache Diemert (from Université Joseph Fourier and BestofMedia Group) for providing the data set used here.
+
+I'd also like to thank University of California Irvine for hosting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php), [where the data set](https://archive.ics.uci.edu/ml/datasets/Buzz+in+social+media+) can be [downloaded](https://archive.ics.uci.edu/ml/machine-learning-databases/00248/regression.tar.gz). 
+
 # Todo
 
 - Divide data in Training (3/5 ~ 4/5) vs Testing (2/5 ~ 1/5)
