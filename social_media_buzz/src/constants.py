@@ -1,5 +1,7 @@
 """Hold default values."""
+import logging
 
+LOGGING_LEVEL = logging.INFO
 DATASET_ATTRS = (
     # Number of Created Discussions
     "NCD_0",
@@ -81,17 +83,19 @@ DATASET_ATTRS = (
     "ADL_4",
     "ADL_5",
     "ADL_6",
-    # Average Discussions Length
-    "AI_0",
-    "AI_1",
-    "AI_2",
-    "AI_3",
-    "AI_4",
-    "AI_5",
-    "AI_6",
+    # Number of Active Discussion
+    "NAD_0",
+    "NAD_1",
+    "NAD_2",
+    "NAD_3",
+    "NAD_4",
+    "NAD_5",
+    "NAD_6",
     # Mean Number of Active Discussion (target)
-    "NAD",
+    "MNAD",
 )
-DEFAULT_TARGET_ATTR = "NAD"
+DATASET_PREDICT_ATTRS_LEN = len(DATASET_ATTRS) - 1
+DEFAULT_TARGET_ATTR = "MNAD"
 DEFAULT_N_FOLD = 5
-DEFAULT_DATA_PATH = ""
+DEFAULT_DATA_PATH = "./assets/dataset/regression/Twitter/Twitter.data"
+RANK_SIZE = 10

@@ -1,4 +1,5 @@
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+from social_media_buzz.src.constants import LOGGING_LEVEL
+
+logging.basicConfig(level=LOGGING_LEVEL)

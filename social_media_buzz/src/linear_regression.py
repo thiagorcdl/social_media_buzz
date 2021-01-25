@@ -20,6 +20,8 @@ class LinearRegressionModel:
         self.r = 0
         self.p = 0
         self.std_err = 0
+        self.predictor_attr = ""
+        self.target_attr = ""
 
     @property
     def r_squared(self):
@@ -39,6 +41,8 @@ class LinearRegressionModel:
         self.r = r
         self.p = p
         self.std_err = std_err
+        self.predictor_attr = predictor_attr
+        self.target_attr = target_attr
         self.trained = True
 
     def predict(self, x):
@@ -50,19 +54,25 @@ class LinearRegressionModel:
         """Return difference between predicted and actual target value."""
         diffs = []
 
-        for pred, actual in zip(self.result, self.testing_result):
+        target_axis = get_column(self.testing_data, self.target_attr)
+        for pred, actual in zip(self.testing_result, target_axis):
             diffs.append(abs(actual - pred))
 
         return sum(diffs)
 
-    def test(self, testing_data):
-        """Use training_data to evaluate correlation.
+    @property
+    def testing_acc(self):
+        """Return the inverse of the error."""
+        return (1 / self.testing_err) if self.testing_err else 1
 
-        Return R-squared.
+    def test(self, testing_data):
+        """Use testing_data to determine whether predictions of the trained
+        model (using previously specified predictor_attr) are accurate.
         """
         if not self.trained:
             raise ValueError("Model hasn't been trained yet.")
 
         self.testing_data = testing_data
-        self.testing_result = list(map(self.predict, testing_data))
-        return self.result
+        predictor_axis = get_column(testing_data, self.target_attr)
+        self.testing_result = list(map(self.predict, predictor_axis))
+        return self.testing_result

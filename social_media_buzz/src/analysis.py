@@ -5,6 +5,9 @@ results.
 """
 import logging
 
+from tqdm import tqdm
+
+from social_media_buzz.src.constants import RANK_SIZE
 from social_media_buzz.src.data import (
     get_candidate_features, prepare_dataset,
     show_results,
@@ -14,24 +17,20 @@ from social_media_buzz.src.linear_regression import LinearRegressionModel
 logger = logging.getLogger(__name__)
 
 
-def rank_features(results, top=10) -> list:
-    """Get the top most significative features.
-
-    Features are ranked by squaring the indexes. Higher is better.
+def rank_features(results, desc, top=RANK_SIZE) -> list:
+    """Get the top most significative features by averaging out their results.
     """
     analysis = {}
+    amount = len(results)
 
-    for fold_results in results:
-        # Higher results are placed last in the array so they have more
-        # significative indexes
-        fold_results = sorted(fold_results, key=lambda x: x[1])
-        logger.debug(fold_results)
+    for fold_results in tqdm(results, desc=desc):
+        for result in fold_results:
+            attr_name = result[0]
+            analysis[attr_name] = analysis.setdefault(attr_name, 0) + result[1]
 
-        for idx, result in enumerate(fold_results):
-            analysis[result[0]] = analysis.setdefault(result[0], 0) + idx ** 2
-
-    ranking = sorted(list(analysis.items()), key=lambda x: x[1] * -1)[:top]
-    return list(map(lambda x: x[0], ranking))
+    averages = map(lambda x: (x[0], x[1] / amount), list(analysis.items()))
+    ranking = sorted(list(averages), key=lambda x: x[1] * -1)
+    return ranking[:top]
 
 
 def main():
@@ -44,19 +43,18 @@ def main():
         fold_r_results = []
         fold_acc_results = []
         model = LinearRegressionModel(training_data)
-
-        for feature in features:
-            logger.debug(f"Trying feature {feature}.")
+        progress = tqdm(features, position=1)
+        for feature in progress:
+            progress.set_description(f"Trying feature {feature}")
             model.train(feature)
             model.test(testing_data)
             fold_r_results.append((feature, model.r_squared))
-            fold_acc_results.append((feature, model.testing_err))
+            fold_acc_results.append((feature, model.testing_acc))
 
         r_results.append(fold_r_results)
         acc_results.append(fold_acc_results)
 
     for name, results in (("R-Squared", r_results), ("Accuracy", acc_results)):
-        logger.info(f"Processing {name} results.")
-        rank = rank_features(results)
+        rank = rank_features(results, f"Processing {name} results.")
         logger.info(f"{name} ranking:")
         show_results(rank, results)

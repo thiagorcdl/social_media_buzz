@@ -5,8 +5,10 @@ This involves dividing the known data set into Training and Testing subsets.
 import logging
 from functools import lru_cache
 
+from tqdm import tqdm
+
 from social_media_buzz.src.constants import (
-    DEFAULT_DATA_PATH, DEFAULT_N_FOLD,
+    DATASET_PREDICT_ATTRS_LEN, DEFAULT_DATA_PATH, DEFAULT_N_FOLD,
     DATASET_ATTRS,
 )
 
@@ -17,9 +19,9 @@ def load_dataset(file_path=DEFAULT_DATA_PATH):
     """Open dataset file and load ITS contents."""
     dataset = []
 
-    logger.info(f"Loading dataset from {file_path}.")
+    desc = f"Loading dataset from {file_path}"
     with open(file_path, "r") as file:
-        for line in file.readlines():
+        for line in tqdm(file.readlines(), desc=desc):
             new_line = list(map(float, line.split(",")))
             dataset.append(new_line)
 
@@ -28,7 +30,7 @@ def load_dataset(file_path=DEFAULT_DATA_PATH):
 
 def get_candidate_features() -> list:
     """Return list of input features to be used as predictor candidates."""
-    return DATASET_ATTRS[:-1]
+    return DATASET_ATTRS[:DATASET_PREDICT_ATTRS_LEN]
 
 
 def prepare_dataset(n_fold=DEFAULT_N_FOLD) -> tuple:
@@ -39,12 +41,12 @@ def prepare_dataset(n_fold=DEFAULT_N_FOLD) -> tuple:
     """
     dataset = load_dataset()
     chunk_size = len(dataset) // n_fold
-    logger.info(f"Dividing dataset in {n_fold} folds.")
+    progress = tqdm(range(n_fold), position=0)
 
-    for fold in range(n_fold):
+    for fold in progress:
+        progress.set_description(f"Yielding fold {fold} for testing")
         testing_init = fold * chunk_size
         testing_end = testing_init + chunk_size
-        logger.debug(f"Yielding folds {fold} for testing.")
 
         training_data = dataset[:testing_init]
         testing_data = dataset[testing_init:testing_end]
@@ -66,9 +68,11 @@ def get_column(dataset, attr) -> list:
 
 def show_results(rank, results):
     """Print rank."""
-    for feature in rank:
-        for result in results:
-            if feature != result[0]:
-                continue
-            print(f"{feature}: {result[1]}")
-            break
+    logger.debug(rank)
+    logger.debug(results)
+    lines = [""]
+
+    for idx, item in enumerate(rank, start=1):
+        lines.append(f"{idx:02} - {item[0]}: {item[1]}")
+
+    logger.info("\n".join(lines))

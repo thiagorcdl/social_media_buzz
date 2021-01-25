@@ -26,7 +26,7 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 # Todo
 
 ### Essential
--[ ] Load data from file
+-[x] Load data from file
 -[x] Divide data in Training (80%) vs Testing (20%)
 -[x] Create linear regression model for a pair of variables (1 predictor)
 -[x] Cycle through features
