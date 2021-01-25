@@ -13,7 +13,7 @@ It utilizes the Buzz in Social Media data set, available at the UCI Machine Lear
     - `{PROJECT_ROOT}/assets/dataset/regression/TomsHardware`
 1. Run `social_media_buzz` module:
     - `cd social_media_buzz`
-    - ``
+    - `python -m social_media_buzz`
 
 
 # Acknowledgements
