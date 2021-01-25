@@ -6,7 +6,15 @@ It utilizes the Buzz in Social Media data set, available at the UCI Machine Lear
 
 # Usage
 
-WIP
+1. Clone repository
+1. Fetch dataset ([regression.tar.gz](https://archive.ics.uci.edu/ml/machine-learning-databases/00248/))
+1. Extract inside `{PROJECT_ROOT}/assets/dataset` so you have the following directories:
+    - `{PROJECT_ROOT}/assets/dataset/regression/Twitter`
+    - `{PROJECT_ROOT}/assets/dataset/regression/TomsHardware`
+1. Run `social_media_buzz` module:
+    - `cd social_media_buzz`
+    - ``
+
 
 # Acknowledgements
 
@@ -16,9 +24,9 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 
 # Todo
 
-- Divide data in Training (3/5 ~ 4/5) vs Testing (2/5 ~ 1/5)
-- Create linear regression model for a pair of variables
-- Cycle through features
-- Create several folds for Training/Testing data and cycle through them
-- Add "installer"
-- Optimize with Cython?
+-[ ] Divide data in Training (80%) vs Testing (20%)
+-[ ] Create linear regression model for a pair of variables (1 predictor)
+-[x] Cycle through features
+-[ ] Create several folds for Training/Testing data and cycle through them
+-[ ] Fetch data set automatically
+-[ ] Optimize with Cython?

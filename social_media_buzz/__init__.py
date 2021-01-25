@@ -1,8 +1,4 @@
-from social_media_buzz._version import __version__
-from social_media_buzz.analysis import main
+from social_media_buzz.src._version import __version__
 
 __author__ = "Thiago Lima"
 __email__ = ""
-
-if __name__ == "__main__":
-    main()

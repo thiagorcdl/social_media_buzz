@@ -3,11 +3,11 @@
 This consists of extracting data, training model, using it and ranking the
 results.
 """
-from social_media_buzz.data import (
+from social_media_buzz.src.data import (
     get_candidate_features, prepare_dataset,
     show_results,
 )
-from social_media_buzz.linear_regression import LinearRegressionModel
+from social_media_buzz.src.linear_regression import LinearRegressionModel
 
 
 def rank_features(results, top=10) -> list:
