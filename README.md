@@ -10,7 +10,7 @@ It utilizes the Buzz in Social Media data set, available at the UCI Machine Lear
 1. Fetch dataset ([regression.tar.gz](https://archive.ics.uci.edu/ml/machine-learning-databases/00248/))
 1. Extract inside `{PROJECT_ROOT}/assets/dataset` so you have the following directories:
     - `{PROJECT_ROOT}/assets/dataset/regression/Twitter`
-    - `{PROJECT_ROOT}/assets/dataset/regression/TomsHardware`
+    - `{PROJECT_ROOT}/assets/dataset/regression/TomsHardware` (won't be used)
 1. Install requirements:
     - `pip install -r requirements.txt`
 1. Run `social_media_buzz` module:
