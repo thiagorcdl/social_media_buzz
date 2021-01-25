@@ -25,10 +25,11 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 
 # Todo
 
--[ ] Divide data in Training (80%) vs Testing (20%)
+-[ ] Load data from file
+-[x] Divide data in Training (80%) vs Testing (20%)
 -[x] Create linear regression model for a pair of variables (1 predictor)
 -[x] Cycle through features
--[ ] Create several folds for Training/Testing data
+-[x] Create several folds for Training/Testing data
 -[x] Cycle through folds
 -[x] Get R-squared for each attribute
 -[x] Rank attribute based on R-squared value.
