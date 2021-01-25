@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage[section]{placeins}
+\usepackage{xcolor}
+\usepackage{breakcites}
+\usepackage{lineno}
+\usepackage{hyphenat}
+
+
+
+\usepackage{times}
+
+
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\@combinedblfloats{\box\@outputbox}{\unvbox\@outputbox}{}{%
+  \errmessage{\noexpand\@combinedblfloats could not be patched}%
+}%
+\makeatother
+
+
+
+
+
+
+\renewenvironment{abstract}
+  {{\bfseries\noindent{\abstractname}\par\nobreak}\footnotesize}
+  {\bigskip}
+
+\titlespacing{\section}{0pt}{*3}{*1}
+\titlespacing{\subsection}{0pt}{*2}{*0.5}
+\titlespacing{\subsubsection}{0pt}{*1.5}{0pt}
+
+
+\usepackage{authblk}
+
+
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{latexsym}
+\usepackage{textcomp}
+\usepackage{longtable}
+\usepackage{tabulary}
+\usepackage{booktabs,array,multirow}
+\usepackage{amsfonts,amsmath,amssymb}
+\providecommand\citet{\cite}
+\providecommand\citep{\cite}
+\providecommand\citealt{\cite}
+% You can conditionalize code for latexml or normal latex using this.
+\newif\iflatexml\latexmlfalse
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}%
+
+\AtBeginDocument{\DeclareGraphicsExtensions{.pdf,.PDF,.eps,.EPS,.png,.PNG,.tif,.TIF,.jpg,.JPG,.jpeg,.JPEG}}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman,english]{babel}
+
+
+
+
+
+
+
+
+\newcommand{\msun}{\,\mathrm{M}_\odot} 
+
+\begin{document}
+
+\title{Ranking Significant Features for Increasing Engagement on Social Media
+via Regression Analysis}
+
+
+
+\author[1]{Thiago R. C. de Lima}%
+\affil[1]{Affiliation not available}%
+
+
+\vspace{-1em}
+
+
+
+  \date{\today}
+
+
+\begingroup
+\let\center\flushleft
+\let\endcenter\endflushleft
+\maketitle
+\endgroup
+
+
+
+
+
+\selectlanguage{english}
+\begin{abstract}
+Social media comprises of platforms that surpassed their initial goal to
+connect people just for the sake of socializing and currently provide
+powerful tools for businesses to reach millions of views worldwide,
+increasing their chances of gaining new customers. This short paper
+utilizes the Buzz in Social Media data set available at UCI Machine
+Learning Repository for identifying the attributes in social media
+content that have the highest correlation to the amount of repercussion
+it gained. To achieve such result, several linear regression models are
+constructed, then ranked based on their respective~model fit measure
+(R-squared) and accuracy when tested against unseen data.%
+\end{abstract}%
+
+
+
+\sloppy
+
+
+\section*{Introduction}
+\label{intro} 
+During the past two decades, the world wide web has seen a great shift on how users interact with the internet. The era of the startups has been a playground for entrepreneurs to try out innovative ways to captivate potential customers and retain users on their platforms and services. While many startups fail or go bankrupt \cite{fail} \cite{genome2019}, others get sold for millions of dollars \cite{million} and a few find their own success and remain strong. For social media platforms to survive, it is imperative to have an active user base. With the growing registered accounts, and ability to to find out each persons likes and dislikes, such platforms has caught the interest of business wanting to invest on marketing campaigns that have the highest return \cite{saravanakumar2012social}. The more users interact with each other, the more data can be gathered and a better profile can be set for each user, thus allowing targeted ads to be more and more tailored to each potential customer.
+
+
+Each social media website has its own algorithm for measuring engagement on specific content provided by some user. Typically such content can be rewarded with increased reach \cite{milan2015algorithms}. For instance, on Twitter there is a list of Trending topics. On YouTube, a video may be presented on the home page. Naturally, the more exposed this content gets to users who hadn't seen it yet, the more engagement it might get.
+
+On this research I will analyze data gathered from the Twitter platform. My goal is to find out whether any of the attributes of a tweet has a strong correlation with the amount of discussion it gathered.  Some work on this field has been done by \cite{kawala:hal-00881395}. 
+
+
+\section*{Methodology}
+\label{method}
+The data set used for this research was provided by Fran\selectlanguage{ngerman}çois Kawala, Ahlame Douzal, Eric Gaussier, and Eustache Diemert (from Université Joseph Fourier and BestofMedia Group) and is currently available at the UCI Machine Learning Repository \cite{sets}, hosted by the University of California Irvine \cite{re3dataorg}. This data set contains a total of 40000 rows and up to 96 columns, across data gathered from Twitter and TomsHardware \cite{team}. However, for this research I am using only the Twitter database, which contains 77 attributes for each of its 38393 samples.
+
+I have developed a script using the Python language and SciPy package. Python is a general purpose programming language \cite{van1995python} \cite{programming} that has gained notoriety in the data science field \cite{kdnuggets} \cite{results} and SciPy is tool set for data analysis, manipulation and visualization \cite{blanco2013learning}. For this particular research, I only used SciPy for calculating the actual linear regression, which returned the slope, the intercept point, the raw R value, the P value and the standard error of the estimated slope \cite{guide}. The source code can be found in my repository on GitHub \cite{thiagorcdlsocial_media_buzz}.
+
+The script is responsible for loading the data set, converting the data type from strings to floating point representation, partitioning the data set into five folds for cross-validation, then for each predictor attribute, creating a linear regression model and testing such model against the testing portion of the partitioned data. Finally, the script ranks correlations and accuracy of the predictors and picks the ten with the highest scores for each one of the chosen metrics.
+
+For evaluating the effectiveness of an attribute on predicting the target feature, I employed two distinct metrics: first, using the R-squared, also known as coefficient of determination \cite{zhang2017coefficient}, and secondly, the accuracy of models when comparing the yielded result against the known value for the training sample. The accuracy is calculated as the inverted error. The error is given by the difference between the expected value (known value for the target feature in the training data) and the resulting value from feeding the model using the training data as input.
+
+
+
+
+\section {Results}
+\label{results}
+In summary, I analyzed a comprehensive data set from Twitter to find attributes that could serve as predictors of the amount of engagement on the comment sections. I applied linear regression models for each feature and cross-validated the results among 5 partitions of data, averaging them and picked the ten most significative features based on two different metrics. The resulting rankings can be found in Table 1 and Table 2.\selectlanguage{english}
+\begin{table}[h!]
+\centering
+\normalsize\begin{tabulary}{1.0\textwidth}{CCC}
+Rank & Attribute & Average R-squared \\
+01 & NCD\_6 & 0.91 \\
+02 & NAD\_6 & 0.91 \\
+03 & NAC\_6 & 0.91 \\
+04 & NCD\_5 & 0.85 \\
+05 & NAD\_5 & 0.85 \\
+06 & NAC\_5 & 0.84 \\
+07 & NA\_6 & 0.82 \\
+08 & NCD\_1 & 0.79 \\
+09 & NAD\_1 & 0.79 \\
+10 & NCD\_4 & 0.79 \\
+\end{tabulary}
+\caption{{Ranking of the ten features highest coefficient of determination
+{\label{448570}}%
+}}
+\end{table}\selectlanguage{english}
+\begin{table}[h!]
+\centering
+\normalsize\begin{tabulary}{1.0\textwidth}{CCC}
+Rank & Attribute & Average Accuracy \\
+01 & NA\_5 & 4.91e-06 \\
+02 & NA\_6 & 9.53e-07 \\
+03 & NA\_4 & 4.76e-07 \\
+04 & NAC\_2 & 4.13e-07 \\
+05 & NCD\_3 & 3.7e-07 \\
+06 & NAD\_3 & 3.7e-07 \\
+07 & NCD\_6 & 3.51e-07 \\
+08 & NAD\_6 & 3.45e-07 \\
+09 & NAC\_3 & 3.28e-07 \\
+10 & NCD\_5 & 2.93e-07 \\
+\end{tabulary}
+\caption{{Ranking of the ten features which produced models with highest accuracy
+for unseen data
+{\label{987099}}%
+}}
+\end{table}
+\subsection*{Final Thoughts}
+\label{final}
+The metrics were unable to come up with similar results, that is, even though some features had a strong coefficient of determination, using them to predict the target feature on unseen data resulted in low accuracy.
+
+The inability for a model to perform with unseen data is a typical case of overfitting. For future work, an option would be increasing the amount of folds, or pruning the data set as some temporal data might be affecting the expected outcome.
+
+\selectlanguage{english}
+\FloatBarrier
+\bibliographystyle{unsrt}
+\bibliography{bibliography/converted_to_latex.bib%
+}
+
+\end{document}
+
