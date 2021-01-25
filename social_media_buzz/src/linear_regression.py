@@ -14,5 +14,8 @@ class LinearRegressionModel:
         return
 
     def test(self, testing_data):
-        """Use training_data to evaluate precision."""
+        """Use training_data to evaluate correlation.
+
+        Return R-squared.
+        """
         return
