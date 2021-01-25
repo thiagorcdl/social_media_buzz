@@ -19,6 +19,11 @@ def prepare_dataset() -> list:
     return []
 
 
+def get_column(dataset, attr) -> list:
+    """Return list of values for column `attr`."""
+    return []
+
+
 def show_results(rank):
     """Print rank."""
     for item in rank:

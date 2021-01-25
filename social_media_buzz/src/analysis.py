@@ -31,18 +31,24 @@ def rank_features(results, top=10) -> list:
 def main():
     """Run main logics for comparing features."""
     features = get_candidate_features()
-    results = []
+    r_results = []
+    acc_results = []
 
     for training_data, testing_data in prepare_dataset():
-        fold_results = []
+        fold_r_results = []
+        fold_acc_results = []
         model = LinearRegressionModel(training_data)
 
         for feature in features:
             model.train(feature)
-            result = model.test(testing_data)
-            fold_results.append((result, feature))
+            model.test(testing_data)
+            fold_r_results.append((model.r_squared, feature))
+            fold_acc_results.append((model.testing_err, feature))
 
-        results.append(fold_results)
+        r_results.append(fold_r_results)
+        acc_results.append(fold_acc_results)
 
-    rank = rank_features(results)
-    show_results(rank)
+    r_rank = rank_features(r_results)
+    acc_rank = rank_features(acc_results)
+    show_results(r_rank)
+    show_results(acc_rank)
