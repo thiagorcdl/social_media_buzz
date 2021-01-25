@@ -44,4 +44,5 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 -[ ] Write article
 -[ ] Fetch data set automatically
 -[ ] Compare both rankings automatically
--[ ] Optimize with Cython
+-[ ] Optimize with threads
+-[ ] Optimize with Cython?

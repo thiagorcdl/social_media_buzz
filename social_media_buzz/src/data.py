@@ -2,14 +2,28 @@
 
 This involves dividing the known data set into Training and Testing subsets.
 """
+import logging
 from functools import lru_cache
 
-from social_media_buzz.src.constants import DEFAULT_N_FOLD, DATASET_ATTRS
+from social_media_buzz.src.constants import (
+    DEFAULT_DATA_PATH, DEFAULT_N_FOLD,
+    DATASET_ATTRS,
+)
+
+logger = logging.getLogger(__name__)
 
 
-def load_dataset():
+def load_dataset(file_path=DEFAULT_DATA_PATH):
     """Open dataset file and load ITS contents."""
-    return []
+    dataset = []
+
+    logger.info(f"Loading dataset from {file_path}.")
+    with open(file_path, "r") as file:
+        for line in file.readlines():
+            new_line = list(map(float, line.split(",")))
+            dataset.append(new_line)
+
+    return dataset
 
 
 def get_candidate_features() -> list:
@@ -25,9 +39,12 @@ def prepare_dataset(n_fold=DEFAULT_N_FOLD) -> tuple:
     """
     dataset = load_dataset()
     chunk_size = len(dataset) // n_fold
+    logger.info(f"Dividing dataset in {n_fold} folds.")
+
     for fold in range(n_fold):
         testing_init = fold * chunk_size
         testing_end = testing_init + chunk_size
+        logger.debug(f"Yielding folds {fold} for testing.")
 
         training_data = dataset[:testing_init]
         testing_data = dataset[testing_init:testing_end]
@@ -47,7 +64,11 @@ def get_column(dataset, attr) -> list:
     return [row[idx] for row in dataset]
 
 
-def show_results(rank):
+def show_results(rank, results):
     """Print rank."""
-    for item in rank:
-        print(item)
+    for feature in rank:
+        for result in results:
+            if feature != result[0]:
+                continue
+            print(f"{feature}: {result[1]}")
+            break
