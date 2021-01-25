@@ -133,8 +133,14 @@ On this research I will analyze data gathered from the Twitter platform. My goal
 \section {Methodology}
 \label{method}
 
+\subsection {Data}
+\label{data}
 The data set used for this research was provided by Fran\selectlanguage{ngerman}çois Kawala, Ahlame Douzal, Eric Gaussier, and Eustache Diemert (from Université Joseph Fourier and BestofMedia Group) and is currently available at the UCI Machine Learning Repository \cite{sets}, hosted by the University of California Irvine \cite{re3dataorg}. This data set contains a total of 40000 rows and up to 96 columns, across data gathered from Twitter and TomsHardware \cite{team}. However, for this research I am using only the Twitter database, which contains 77 attributes for each of its 38393 samples.
 
+Attributes are presented in temporal fashion, varying according to each observation date. Each row contains 7 values each of the following categories: Number of Created Discussions, Author Increase, Attention Level, Burstiness Level, Number of Atomic Containers, Attention Level (measured with number of contributions), Contribution Sparseness, Author Interaction, Number of Authors, Average Discussions Length, Number of Active Discussion. Finally, there is a single value in each row for Mean Number of Active Discussion which I'll use as the target attribute, that is, the one I'm trying to predict.
+
+\subsection {Tools}
+\label{tools}
 I have developed a script using the Python language and SciPy package. Python is a general purpose programming language \cite{van1995python} \cite{programming} that has gained notoriety in the data science field \cite{kdnuggets} \cite{results} and SciPy is tool set for data analysis, manipulation and visualization \cite{blanco2013learning}. For this particular research, I only used SciPy for calculating the actual linear regression, which returned the slope, the intercept point, the raw R value, the P value and the standard error of the estimated slope \cite{guide}. The source code can be found in my repository on GitHub \cite{thiagorcdlsocial_media_buzz}.
 
 The script is responsible for loading the data set, converting the data type from strings to floating point representation, partitioning the data set into five folds for cross-validation, then for each predictor attribute, creating a linear regression model and testing such model against the testing portion of the partitioned data. Finally, the script ranks correlations and accuracy of the predictors and picks the ten with the highest scores for each one of the chosen metrics.
@@ -143,10 +149,13 @@ For evaluating the effectiveness of an attribute on predicting the target featur
 
 
 
-
 \section {Results}
 \label{results}
-In summary, I analyzed a comprehensive data set from Twitter to find attributes that could serve as predictors of the amount of engagement on the comment sections. I applied linear regression models for each feature and cross-validated the results among 5 partitions of data, averaging them and picked the ten most significative features based on two different metrics. The resulting rankings can be found in Table 1 and Table 2.\selectlanguage{english}
+In summary, I analyzed a comprehensive data set from Twitter to find attributes that could serve as predictors of the amount of engagement on the comment sections. I applied linear regression models for each feature and cross-validated the results among 5 partitions of data, averaging them and picked the ten most significant features based on two different metrics. The resulting rankings can be found in Table 1 and Table 2.
+
+According to the ranking based on the average R-squared values, the feature with strongest correlation to the sixth observation of Number of Created Discussions, followed by the sixth observation of Number of Active Discussion and Number of Atomic Containers.
+
+On the other hand, when applying the models to the testing data, the highest ranked feature is Number of Authors on its fifth, sixth and fourth observations, respectively. The attributes that generated the most accurate models differ almost significantly. Only four out of the ten best attributes from Table 1 are represented again in Table 2. If we were to pick only the top 5, there would be no recurring attribute at all.\selectlanguage{english}
 \begin{table}[h!]
 \centering
 \normalsize\begin{tabulary}{1.0\textwidth}{CCC}
@@ -185,8 +194,8 @@ Rank & Attribute & Average Accuracy \\
 for unseen data
 {\label{987099}}%
 }}
-\end{table}\subsection {Final Thoughts}
-\label{final}
+\end{table}\subsection {Observations}
+\label{obs}
 The metrics were unable to come up with similar results, that is, even though some features had a strong coefficient of determination, using them to predict the target feature on unseen data resulted in low accuracy.
 
 The inability for a model to perform with unseen data is a typical case of overfitting. For future work, an option would be increasing the amount of folds, or pruning the data set as some temporal data might be affecting the expected outcome.
