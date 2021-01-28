@@ -51,14 +51,15 @@ class LinearRegressionModel:
 
     @property
     def testing_err(self):
-        """Return difference between predicted and actual target value."""
+        """Return average difference between predicted and actual target value.
+        """
         diffs = []
 
         target_axis = get_column(self.testing_data, self.target_attr)
         for pred, actual in zip(self.testing_result, target_axis):
             diffs.append(abs(actual - pred))
 
-        return sum(diffs)
+        return sum(diffs) / len(self.testing_result)
 
     @property
     def testing_acc(self):
