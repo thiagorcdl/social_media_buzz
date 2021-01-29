@@ -101,4 +101,6 @@ ASSETS_PATH = "./assets"
 DATA_PATH = f"{ASSETS_PATH}/dataset/regression/Twitter/Twitter.data"
 RESULTS_PATH = f"{ASSETS_PATH}/results"
 CHARTS_PATH = f"{RESULTS_PATH}/charts"
+R2 = "R2"
+ACCURACY = "Accuracy"
 RANK_SIZE = 10

@@ -36,6 +36,7 @@ def load_dataset(file_path=DATA_PATH):
     return dataset
 
 
+@lru_cache(maxsize=1)
 def get_candidate_features() -> list:
     """Return list of input features to be used as predictor candidates."""
     return DATASET_ATTRS[:DATASET_PREDICT_ATTRS_LEN]
@@ -75,8 +76,8 @@ def get_column(dataset, attr) -> list:
     return [row[idx] for row in dataset]
 
 
-def show_results(rank, results, name):
-    """Print rank to terminal and write csv file."""
+def show_rank(rank, results, name):
+    """Print specific metric's rank to terminal and write CSV file."""
     logger.debug(rank)
     logger.debug(results)
     print_lines = [""]
@@ -92,4 +93,22 @@ def show_results(rank, results, name):
 
         logger.info("\n".join(print_lines))
 
-    logger.info("\n".join(lines))
+
+def write_results(results):
+    """Write results in CSV file.
+
+    Build headers from amount of folds resent in attribute results.
+    """
+
+    for name, metric_content in results.items():
+        csv_headers = ["attr"] + [
+            f"fold{idx:02}" for idx
+            in range(len(list(metric_content.values())[0]))
+        ]
+        path = f"{RESULTS_PATH}/{name.lower()}_results.csv"
+
+        with open(path, 'w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow(csv_headers)
+            for attr, folds in metric_content.items():
+                csv_writer.writerow([attr] + folds)
