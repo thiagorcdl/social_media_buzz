@@ -5,16 +5,22 @@ This involves dividing the known data set into Training and Testing subsets.
 import csv
 import logging
 from functools import lru_cache
+from pathlib import Path
 
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from social_media_buzz.src.constants import (
-    DATASET_PREDICT_ATTRS_LEN, DATA_PATH, N_FOLD,
+    CHARTS_PATH, DATASET_PREDICT_ATTRS_LEN, DATA_PATH, N_FOLD,
     DATASET_ATTRS, RESULTS_PATH,
 )
 
 logger = logging.getLogger(__name__)
+
+
+def create_dirs():
+    """Ensure necessary paths are valid."""
+    for dir_path in [RESULTS_PATH, CHARTS_PATH]:
+        Path(dir_path).mkdir(parents=True, exist_ok=True)
 
 
 def load_dataset(file_path=DATA_PATH):
@@ -41,6 +47,7 @@ def prepare_dataset(n_fold=N_FOLD) -> tuple:
     Use cross-validation / folding technique to train and test models
     based on different combination of data, to prevent overfitting.
     """
+    create_dirs()
     dataset = load_dataset()
     chunk_size = len(dataset) // n_fold
     progress = tqdm(range(n_fold), position=0)
