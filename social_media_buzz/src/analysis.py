@@ -54,7 +54,7 @@ def main():
         r_results.append(fold_r_results)
         acc_results.append(fold_acc_results)
 
-    for name, results in (("R-Squared", r_results), ("Accuracy", acc_results)):
+    for name, results in (("R2", r_results), ("Accuracy", acc_results)):
         rank = rank_features(results, f"Processing {name} results.")
         logger.info(f"{name} ranking:")
-        show_results(rank, results)
+        show_results(rank, results, name)

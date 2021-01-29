@@ -15,6 +15,7 @@ It utilizes the Buzz in Social Media data set, available at the UCI Machine Lear
     - `pip install -r requirements.txt`
 1. Run `social_media_buzz` module:
     - `python -m social_media_buzz`
+1. Check results under `/assets/results/`
 
 
 # Acknowledgements
@@ -43,7 +44,6 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 - [ ] Generate charts
  
 ### Above and Beyond
-- [ ] Write article
 - [ ] Fetch data set automatically
 - [ ] Compare both rankings automatically
 - [ ] Optimize with threads

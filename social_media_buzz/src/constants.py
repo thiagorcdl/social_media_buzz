@@ -95,7 +95,10 @@ DATASET_ATTRS = (
     "MNAD",
 )
 DATASET_PREDICT_ATTRS_LEN = len(DATASET_ATTRS) - 1
-DEFAULT_TARGET_ATTR = "MNAD"
-DEFAULT_N_FOLD = 5
-DEFAULT_DATA_PATH = "./assets/dataset/regression/Twitter/Twitter.data"
+TARGET_ATTR = "MNAD"
+N_FOLD = 5
+ASSETS_PATH = "./assets"
+DATA_PATH = f"{ASSETS_PATH}/dataset/regression/Twitter/Twitter.data"
+RESULTS_PATH = f"{ASSETS_PATH}/results"
+CHARTS_PATH = f"{RESULTS_PATH}/charts"
 RANK_SIZE = 10

@@ -3,7 +3,7 @@ to be applied on the Testing/Validation data.
 """
 from scipy import stats
 
-from social_media_buzz.src.constants import DEFAULT_TARGET_ATTR
+from social_media_buzz.src.constants import TARGET_ATTR
 from social_media_buzz.src.data import get_column
 
 
@@ -28,7 +28,7 @@ class LinearRegressionModel:
         """Return the correlation value (R-squared)."""
         return self.r ** 2
 
-    def train(self, predictor_attr, target_attr=DEFAULT_TARGET_ATTR):
+    def train(self, predictor_attr, target_attr=TARGET_ATTR):
         """Use self.training_data to train a model using given feature."""
         x_axis = get_column(self.training_data, predictor_attr)
         y_axis = get_column(self.training_data, target_attr)

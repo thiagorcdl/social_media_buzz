@@ -2,20 +2,22 @@
 
 This involves dividing the known data set into Training and Testing subsets.
 """
+import csv
 import logging
 from functools import lru_cache
 
+import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from social_media_buzz.src.constants import (
-    DATASET_PREDICT_ATTRS_LEN, DEFAULT_DATA_PATH, DEFAULT_N_FOLD,
-    DATASET_ATTRS,
+    DATASET_PREDICT_ATTRS_LEN, DATA_PATH, N_FOLD,
+    DATASET_ATTRS, RESULTS_PATH,
 )
 
 logger = logging.getLogger(__name__)
 
 
-def load_dataset(file_path=DEFAULT_DATA_PATH):
+def load_dataset(file_path=DATA_PATH):
     """Open dataset file and load ITS contents."""
     dataset = []
 
@@ -33,7 +35,7 @@ def get_candidate_features() -> list:
     return DATASET_ATTRS[:DATASET_PREDICT_ATTRS_LEN]
 
 
-def prepare_dataset(n_fold=DEFAULT_N_FOLD) -> tuple:
+def prepare_dataset(n_fold=N_FOLD) -> tuple:
     """Yield list of Training and Testing data tuples, respectively.
 
     Use cross-validation / folding technique to train and test models
@@ -66,13 +68,21 @@ def get_column(dataset, attr) -> list:
     return [row[idx] for row in dataset]
 
 
-def show_results(rank, results):
-    """Print rank."""
+def show_results(rank, results, name):
+    """Print rank to terminal and write csv file."""
     logger.debug(rank)
     logger.debug(results)
-    lines = [""]
+    print_lines = [""]
+    path = f"{RESULTS_PATH}/{name.lower()}_rank.csv"
 
-    for idx, item in enumerate(rank, start=1):
-        lines.append(f"{idx:02} - {item[0]}: {item[1]}")
+    with open(path, 'w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(["Rank", "Attribute", f"Average {name}"])
+
+        for idx, item in enumerate(rank, start=1):
+            print_lines.append(f"{idx:02} - {item[0]}: {item[1]}")
+            csv_writer.writerow([idx, item[0], item[1]])
+
+        logger.info("\n".join(print_lines))
 
     logger.info("\n".join(lines))
