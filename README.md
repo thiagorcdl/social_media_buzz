@@ -41,7 +41,7 @@ I'd also like to thank University of California Irvine for hosting the [UCI Mach
 - [x] Create several folds for Training/Testing data (Cross-validation)
 - [x] Cycle through folds
 - [x] Rank attribute based on testing data accuracy.
-- [ ] Generate charts
+- [x] Generate charts
  
 ### Above and Beyond
 - [ ] Fetch data set automatically

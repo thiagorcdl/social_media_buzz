@@ -97,10 +97,14 @@ DATASET_ATTRS = (
 DATASET_PREDICT_ATTRS_LEN = len(DATASET_ATTRS) - 1
 TARGET_ATTR = "MNAD"
 N_FOLD = 5
+RANK_SIZE = 10
+R2 = "R2"
+ACCURACY = "Accuracy"
+
 ASSETS_PATH = "./assets"
 DATA_PATH = f"{ASSETS_PATH}/dataset/regression/Twitter/Twitter.data"
 RESULTS_PATH = f"{ASSETS_PATH}/results"
 CHARTS_PATH = f"{RESULTS_PATH}/charts"
-R2 = "R2"
-ACCURACY = "Accuracy"
-RANK_SIZE = 10
+
+COLOR_1 = "teal"
+COLOR_2 = "xkcd:azure"

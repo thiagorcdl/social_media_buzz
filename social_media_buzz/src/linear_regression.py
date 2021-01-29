@@ -1,9 +1,13 @@
 """Module for implementing the logics behind the Linear Regression model
 to be applied on the Testing/Validation data.
 """
+import matplotlib.pyplot as plt
 from scipy import stats
 
-from social_media_buzz.src.constants import TARGET_ATTR
+from social_media_buzz.src.constants import (
+    CHARTS_PATH, COLOR_1, COLOR_2,
+    TARGET_ATTR,
+)
 from social_media_buzz.src.data import get_column
 
 
@@ -74,6 +78,20 @@ class LinearRegressionModel:
             raise ValueError("Model hasn't been trained yet.")
 
         self.testing_data = testing_data
-        predictor_axis = get_column(testing_data, self.target_attr)
+        predictor_axis = get_column(testing_data, self.predictor_attr)
         self.testing_result = list(map(self.predict, predictor_axis))
         return self.testing_result
+
+    def plot_chart(self, filename="chart", show=False, save=True):
+        """Plot lines using test data and function from model."""
+        fig, ax = plt.subplots()
+        ax.set(xlabel=self.predictor_attr, ylabel=self.target_attr)
+        x_axis = get_column(self.testing_data, self.predictor_attr)
+        y_axis = get_column(self.testing_data, self.target_attr)
+        plt.scatter(x_axis, y_axis, color=COLOR_1)
+        plt.plot(x_axis, self.testing_result, color=COLOR_2)
+        if show:
+            plt.show()
+        if save:
+            plt.savefig(f"{CHARTS_PATH}/{filename}.png")
+        plt.clf()

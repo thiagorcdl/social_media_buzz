@@ -6,6 +6,7 @@ results.
 import logging
 from collections import defaultdict
 
+import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from social_media_buzz.src.constants import ACCURACY, R2, RANK_SIZE
@@ -34,15 +35,33 @@ def rank_features(metric_result, name, top=RANK_SIZE) -> list:
     return ranking[:top]
 
 
-def get_ranks(fold_results=None):
+def get_ranks(fold_results=None) -> list:
     """Print ranks to terminal and write csv files."""
-    results = fold_results
+    ranks = []
 
     for name in (R2, ACCURACY):
-        metric_result = results.get(name)
+        metric_result = fold_results.get(name)
         rank = rank_features(metric_result.values(), name)
         logger.info(f"{name} ranking:")
         show_rank(rank, metric_result, name)
+        ranks.append(rank)
+
+    return ranks
+
+
+def generate_charts(ranks):
+    """Use rankings to generate chart for each fold."""
+    for name, rank in zip([R2, ACCURACY], ranks):
+        best_attr = rank[0][0]
+        for idx, dataset in enumerate(prepare_dataset()):
+            training_data, testing_data = dataset
+            model = LinearRegressionModel(training_data)
+            model.train(best_attr)
+            model.test(testing_data)
+            fig, ax = plt.subplots()
+            ax.set_title(f"Fold {idx:02}")
+            filename = f"{name.lower()}_{best_attr}_{idx:02}"
+            model.plot_chart(filename=filename)
 
 
 def main():
@@ -70,4 +89,5 @@ def main():
             fold_results[ACCURACY][idx].append((attr_name, model.testing_acc))
 
     write_results(results)
-    get_ranks(fold_results)
+    ranks = get_ranks(fold_results)
+    generate_charts(ranks)

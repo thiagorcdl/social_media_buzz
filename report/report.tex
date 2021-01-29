@@ -151,24 +151,24 @@ For evaluating the effectiveness of an attribute on predicting the target featur
 
 \section {Results}
 \label{results}
-In summary, I analyzed a comprehensive data set from Twitter to find attributes that could serve as predictors of the amount of engagement on the comment sections. I applied linear regression models for each feature and cross-validated the results among 5 partitions of data, averaging them and picked the ten most significant features based on two different metrics. The resulting rankings can be found in Table 1 and Table 2.
+In summary, I analyzed a comprehensive data set from Twitter to find attributes that could serve as predictors of the amount of engagement on the comment sections. I applied linear regression models for each feature and cross-validated the results among 5 partitions of data, averaging them and picked the ten most significant features based on two different metrics. The resulting rankings can be found in \textit{Table 1} and \textit{Table 2}.
 
-According to the ranking based on the average R-squared values, the feature with strongest correlation to the sixth observation of Number of Created Discussions, followed by the sixth observation of Number of Active Discussion and Number of Atomic Containers.
+According to the ranking based on the average R-squared values, the feature with strongest correlation to the sixth observation of \textit{Number of Created Discussions} (\textit{NCD\_6}), followed by the sixth observation of \textit{Number of Active Discussion} (\textit{NAD\_6}) and \textit{Number of Atomic Containers} (\textit{NAC\_6}). Coefficient of determination with values close to 1, as is the case of \textit{NCD\_6} with 0.913208484499559, tend to represent a strong correlation between the the predictor and the target attribute.
 
-On the other hand, when applying the models to the testing data, the highest ranked feature is Number of Authors on its fifth, sixth and fourth observations, respectively. The attributes that generated the most accurate models differ almost significantly. Only four out of the ten best attributes from Table 1 are represented again in Table 2. If we were to pick only the top 5, there would be no recurring attribute at all.\selectlanguage{english}
+When applying the models to the testing data, the highest ranked feature are the exact same ones previously observed. From the fourth place forward, there are some differences in both rankings. Still, out of the ten features in the R-squared ranking, only one is not present on the accuracy ranking (and vice-versa).\selectlanguage{english}
 \begin{table}[h!]
 \centering
 \normalsize\begin{tabulary}{1.0\textwidth}{CCC}
-Rank & Attribute & Average R-squared \\
-01 & NCD\_6 & 0.91 \\
-02 & NAD\_6 & 0.91 \\
-03 & NAC\_6 & 0.91 \\
-04 & NCD\_5 & 0.85 \\
-05 & NAD\_5 & 0.85 \\
-06 & NAC\_5 & 0.84 \\
-07 & NA\_6 & 0.82 \\
-08 & NCD\_1 & 0.79 \\
-09 & NAD\_1 & 0.79 \\
+Rank & Attribute & Average R2 \\
+1 & NCD\_6 & 0.91 \\
+2 & NAD\_6 & 0.91 \\
+3 & NAC\_6 & 0.91 \\
+4 & NCD\_5 & 0.85 \\
+5 & NAD\_5 & 0.85 \\
+6 & NAC\_5 & 0.84 \\
+7 & NA\_6 & 0.82 \\
+8 & NCD\_1 & 0.79 \\
+9 & NAD\_1 & 0.79 \\
 10 & NCD\_4 & 0.79 \\
 \end{tabulary}
 \caption{{Ranking of the ten features highest coefficient of determination
@@ -179,26 +179,71 @@ Rank & Attribute & Average R-squared \\
 \centering
 \normalsize\begin{tabulary}{1.0\textwidth}{CCC}
 Rank & Attribute & Average Accuracy \\
-01 & NA\_5 & 4.91e-06 \\
-02 & NA\_6 & 9.53e-07 \\
-03 & NA\_4 & 4.76e-07 \\
-04 & NAC\_2 & 4.13e-07 \\
-05 & NCD\_3 & 3.7e-07 \\
-06 & NAD\_3 & 3.7e-07 \\
-07 & NCD\_6 & 3.51e-07 \\
-08 & NAD\_6 & 3.45e-07 \\
-09 & NAC\_3 & 3.28e-07 \\
-10 & NCD\_5 & 2.93e-07 \\
+1 & NCD\_6 & 0.02 \\
+2 & NAD\_6 & 0.02 \\
+3 & NAC\_6 & 0.02 \\
+4 & NA\_6 & 0.02 \\
+5 & NAD\_5 & 0.02 \\
+6 & NCD\_5 & 0.02 \\
+7 & NAC\_5 & 0.02 \\
+8 & NA\_5 & 0.01 \\
+9 & NAD\_1 & 0.01 \\
+10 & NCD\_1 & 0.01 \\
 \end{tabulary}
 \caption{{Ranking of the ten features which produced models with highest accuracy
 for unseen data
 {\label{987099}}%
 }}
-\end{table}\subsection {Observations}
-\label{obs}
-The metrics were unable to come up with similar results, that is, even though some features had a strong coefficient of determination, using them to predict the target feature on unseen data resulted in low accuracy.
+\end{table}By plotting the linear regression model for the most significant feature, \textit{Number of Created Discussions}, over the testing data for each fold, it is possible to observe how the predictions hold themselves reasonably well even on unseen data. These charts can be found in \textit{Fig.1}, \textit{Fig.2}, \textit{Fig.3}, \textit{Fig.4} and \textit{Fig.5}.\selectlanguage{english}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.70\columnwidth]{figures/r2-NCD-6-00/r2-NCD-6-00}
+\caption{{NCD\_6 plotted over Fold 01
+{\label{793133}}%
+}}
+\end{center}
+\end{figure}\selectlanguage{english}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.70\columnwidth]{figures/r2-NCD-6-04/r2-NCD-6-04}
+\caption{{NCD\_6 plotted over Fold 02
+{\label{898146}}%
+}}
+\end{center}
+\end{figure}\selectlanguage{english}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.70\columnwidth]{figures/r2-NCD-6-03/r2-NCD-6-03}
+\caption{{NCD\_6 plotted over Fold 03
+{\label{346971}}%
+}}
+\end{center}
+\end{figure}\selectlanguage{english}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.70\columnwidth]{figures/r2-NCD-6-02/r2-NCD-6-02}
+\caption{{NCD\_6 plotted over Fold 04
+{\label{478810}}%
+}}
+\end{center}
+\end{figure}\selectlanguage{english}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.70\columnwidth]{figures/r2-NCD-6-01/r2-NCD-6-01}
+\caption{{NCD\_6 plotted over Fold 05
+{\label{673896}}%
+}}
+\end{center}
+\end{figure}
 
-The inability for a model to perform with unseen data is a typical case of overfitting. For future work, an option would be increasing the amount of folds, or pruning the data set as some temporal data might be affecting the expected outcome.
+\subsection {Observations}
+\label{obs}
+The chosen metrics were able to come up with very promising results, that is, using the features that had high R-squared values to predict the target feature on unseen data resulted similar performance, even though the accuracy values were far from the highest possible value, 1, which would mean a perfect fit.
+
+
+The ability for a model to perform with unseen data suggests the coefficient of determination is a good metric for finding out significant attributes in a data set when using linear regression. Therefore, for the purpose of predicting the levels of engagement on Twitter, the Number of Created Discussions is a good attribute to look at.
+
+For future work, an option would be the analysis of precision when using multiple predictors at once.
 
 \selectlanguage{english}
 \FloatBarrier
