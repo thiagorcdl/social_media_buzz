@@ -24,7 +24,7 @@ def create_dirs():
 
 
 def load_dataset(file_path=DATA_PATH):
-    """Open dataset file and load ITS contents."""
+    """Open dataset file and load its contents."""
     dataset = []
 
     desc = f"Loading dataset from {file_path}"
@@ -34,12 +34,6 @@ def load_dataset(file_path=DATA_PATH):
             dataset.append(new_line)
 
     return dataset
-
-
-@lru_cache(maxsize=1)
-def get_candidate_features() -> list:
-    """Return list of input features to be used as predictor candidates."""
-    return DATASET_ATTRS[:DATASET_PREDICT_ATTRS_LEN]
 
 
 def prepare_dataset(n_fold=N_FOLD) -> tuple:
@@ -62,6 +56,12 @@ def prepare_dataset(n_fold=N_FOLD) -> tuple:
         testing_data = dataset[testing_init:testing_end]
         training_data += dataset[testing_end:]
         yield training_data, testing_data
+
+
+@lru_cache(maxsize=1)
+def get_candidate_features() -> list:
+    """Return list of input features to be used as predictor candidates."""
+    return DATASET_ATTRS[:DATASET_PREDICT_ATTRS_LEN]
 
 
 @lru_cache(maxsize=128)
@@ -97,7 +97,7 @@ def show_rank(rank, results, name):
 def write_results(results):
     """Write results in CSV file.
 
-    Build headers from amount of folds resent in attribute results.
+    Build headers from amount of folds present in attribute results.
     """
 
     for name, metric_content in results.items():
